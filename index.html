@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>45 Days Tracker</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(9, 40px);
+        gap: 10px;
+      }
+      .day {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+      .passed {
+        background-color: #4caf50;
+        color: white;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div><h1 style="padding: 20px"></h1></div>
+    <div class="grid" id="grid"></div>
+    <h2 style="padding: 20px; color: green"></h2>
+    <button onclick="resetToCurrentDay()">Fiz arte, reiniciar contagem</button>
+
+    <script>
+      const totalDays = 45;
+      const grid = document.getElementById("grid");
+
+      let currentDate = new Date();
+
+      function calculateDays() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        currentDate.setHours(0, 0, 0, 0);
+
+        const diffTime = Math.abs(today - currentDate);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays > totalDays ? totalDays : diffDays;
+      }
+
+      function renderGrid(currentDay) {
+        grid.innerHTML = "";
+
+        for (let i = 1; i <= totalDays; i++) {
+          const dayDiv = document.createElement("div");
+          dayDiv.classList.add("day");
+          dayDiv.textContent = i;
+
+          if (i <= currentDay) {
+            dayDiv.classList.add("passed");
+          }
+
+          grid.appendChild(dayDiv);
+        }
+
+        if (currentDay === totalDays) {
+          const h2 = document.getElementsByTagName("h2")[0];
+          h2.textContent = "Parabéns! Você não fez arte por 45 dias";
+        }
+      }
+
+      function renderTitle(currentDay) {
+        const h1 = document.getElementsByTagName("h1")[0];
+        h1.textContent = `Estamos a ${currentDay} dias sem fazer arte`;
+      }
+
+      function resetToCurrentDay() {
+        currentDate = new Date();
+        const currentDay = calculateDays();
+
+        renderGrid(currentDay);
+        renderTitle(currentDay);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const currentDay = calculateDays();
+
+        renderGrid(currentDay);
+        renderTitle(currentDay);
+      });
+    </script>
+  </body>
+</html>
