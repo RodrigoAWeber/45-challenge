@@ -18,15 +18,18 @@
         height: 100vh;
         background-color: #f5f5f5;
         font-family: Arial, sans-serif;
+        padding: 10px;
       }
       .grid {
         display: grid;
-        grid-template-columns: repeat(9, 40px);
+        grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
         gap: 10px;
+        width: 100%;
+        max-width: 400px;
       }
       .day {
-        width: 40px;
-        height: 40px;
+        width: 100%;
+        aspect-ratio: 1;
         border: 2px solid #ddd;
         display: flex;
         align-items: center;
@@ -46,9 +49,9 @@
     </style>
   </head>
   <body>
-    <div><h1 style="padding: 20px"></h1></div>
+    <div><h2 style="padding: 20px 0"></h2></div>
     <div class="grid" id="grid"></div>
-    <h2 style="padding: 20px; color: green"></h2>
+    <h3 style="padding: 20px; color: green"></h3>
     <button onclick="resetToCurrentDay()">Fiz arte, reiniciar contagem</button>
 
     <script>
@@ -83,14 +86,14 @@
         }
 
         if (currentDay === totalDays) {
-          const h2 = document.getElementsByTagName("h2")[0];
-          h2.textContent = "Parabéns! Você não fez arte por 45 dias";
+          const h3 = document.getElementsByTagName("h3")[0];
+          h3.textContent = "Parabéns! Você não fez arte por 45 dias";
         }
       }
 
       function renderTitle(currentDay) {
-        const h1 = document.getElementsByTagName("h1")[0];
-        h1.textContent = `Estamos a ${currentDay} dias sem fazer arte`;
+        const h2 = document.getElementsByTagName("h2")[0];
+        h2.textContent = `Estamos a ${currentDay} dias sem fazer arte`;
       }
 
       function resetToCurrentDay() {
